@@ -1,10 +1,10 @@
-﻿using CollegeApp.Models;
+﻿using DifferentWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace CollegeApp.Repository
+namespace DifferentWeb.Repository
 {
     public class ExamSubmitionRepository
     {

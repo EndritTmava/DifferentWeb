@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
-using CollegeApp.Models;
+using DifferentWeb.Models;
 
-namespace CollegeApp.Repository
+namespace DifferentWeb.Repository
 {
     public class CollegeContext:DbContext
     {

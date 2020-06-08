@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using CollegeApp.Models;
-namespace CollegeApp.Repository
+using DifferentWeb.Models;
+
+namespace DifferentWeb.Repository
 {
     public class DepartamentRepository
     {
