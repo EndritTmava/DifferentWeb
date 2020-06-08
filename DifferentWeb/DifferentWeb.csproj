@@ -174,9 +174,35 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Administrator.cs" />
+    <Compile Include="Models\Branch.cs" />
+    <Compile Include="Models\Departament.cs" />
+    <Compile Include="Models\ExamPeriod.cs" />
+    <Compile Include="Models\ExamSubmition.cs" />
+    <Compile Include="Models\Gradeing.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\Professor.cs" />
+    <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\Semester.cs" />
+    <Compile Include="Models\SemesterSubmition.cs" />
+    <Compile Include="Models\Student.cs" />
+    <Compile Include="Models\Subject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\AdministratorRepository.cs" />
+    <Compile Include="Repository\BranchRepository.cs" />
+    <Compile Include="Repository\CollegeContext.cs" />
+    <Compile Include="Repository\DepartamentRepository.cs" />
+    <Compile Include="Repository\ExamPeriodRepository.cs" />
+    <Compile Include="Repository\ExamSubmitionRepository.cs" />
+    <Compile Include="Repository\GradeingRepository.cs" />
+    <Compile Include="Repository\ProfessorRepository.cs" />
+    <Compile Include="Repository\RoleRepository.cs" />
+    <Compile Include="Repository\SemesterRepository.cs" />
+    <Compile Include="Repository\SemesterSubmitionRepository.cs" />
+    <Compile Include="Repository\StudentRepository.cs" />
+    <Compile Include="Repository\SubjectRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
