@@ -8,7 +8,6 @@ namespace DifferentWeb.Repository
 {
     public class GradeingRepository
     {
-
         public List<Gradeing> GetGradeings()
         {
             CollegeContext dbcontext = new CollegeContext();

@@ -21,6 +21,5 @@ namespace DifferentWeb.Repository
         public DbSet<SemesterSubmition> SemesterSubmitions { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Subject> Subjects { get; set; }
-
     }
 }

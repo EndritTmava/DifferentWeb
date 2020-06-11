@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using DifferentWeb.Models;
 
-namespace CollegeApp.Repository
+namespace DifferentWeb.Repository
 {
-    public class DifferentWeb.Repository
+    public class RoleRepository
     {
         public List<Role> GetRoles()
         {

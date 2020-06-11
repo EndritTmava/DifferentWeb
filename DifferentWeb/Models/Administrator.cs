@@ -7,10 +7,7 @@ namespace DifferentWeb.Models
 {
     public class Administrator:Person
     {
-
         public int RoleID { get; set; }
         public Role Role { get; set; }
-
     }
-
 }
