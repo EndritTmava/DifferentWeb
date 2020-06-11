@@ -1,0 +1,50 @@
+﻿@model DifferentWeb.Models.ExamSubmition
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ExamSubmition</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ExamPeriod.PeriodName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExamPeriod.PeriodName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Student.ParentName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Student.ParentName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Subject.SubjectName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subject.SubjectName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfSubmition)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfSubmition)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

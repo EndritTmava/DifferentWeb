@@ -1,0 +1,42 @@
+﻿@model DifferentWeb.Models.SemesterSubmition
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>SemesterSubmition</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Student.ParentName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Student.ParentName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SemestrID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SemestrID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SemesterRegistrationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SemesterRegistrationDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

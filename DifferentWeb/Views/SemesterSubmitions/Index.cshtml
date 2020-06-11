@@ -1,0 +1,45 @@
+﻿@model IEnumerable<DifferentWeb.Models.SemesterSubmition>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Student.ParentName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SemestrID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SemesterRegistrationDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Student.ParentName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SemestrID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SemesterRegistrationDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

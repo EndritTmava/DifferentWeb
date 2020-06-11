@@ -9,6 +9,10 @@ namespace DifferentWeb.Models
     public class Semester
     {
         public int ID { get; set; }
-        public int semester { get; set; }
+        [Required]
+        [MaxLength(20)]
+        [RegularExpression("[a-zA-Z0-9]")]
+        [Display(Name = "Semester")]
+        public string semester { get; set; }
     }
 }
