@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using DifferentWeb.Models;
 using DifferentWeb.Repository;
+using Microsoft.AspNet.Identity;
 
 namespace DifferentWeb.Controllers
 {
@@ -30,6 +31,21 @@ namespace DifferentWeb.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Student student = db.Students.Find(id);
+            if (student == null)
+            {
+                return HttpNotFound();
+            }
+            return View(student);
+        }
+
+        //Custom ActionResult
+        public ActionResult Profile(string id)
+        {
+            if (id != User.Identity.GetUserName())
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Student student = db.Students.Find(User.Identity.GetUserName());
             if (student == null)
             {
                 return HttpNotFound();

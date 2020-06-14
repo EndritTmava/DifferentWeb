@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using DifferentWeb.Models;
 using DifferentWeb.Repository;
+using Microsoft.AspNet.Identity;
 
 namespace DifferentWeb.Controllers
 {
@@ -35,6 +36,21 @@ namespace DifferentWeb.Controllers
                 return HttpNotFound();
             }
             return View(gradeing);
+        }
+
+        // Custom ActionResult
+        public ActionResult ReadGrades(string id)
+        {
+            if (id == null || id != User.Identity.GetUserName())
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var gradeings = db.Gradeings.Where(x => x.Student.ID == id);
+            if (gradeings == null)
+            {
+                return HttpNotFound();
+            }
+            return View(gradeings.ToList());
         }
 
         // GET: Gradeings/Create

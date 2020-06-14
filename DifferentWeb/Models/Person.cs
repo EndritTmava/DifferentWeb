@@ -9,7 +9,7 @@ namespace DifferentWeb.Models
     public class Person
     {
 
-        public int ID { get; set; }
+        public string ID { get; set; }
         [Required]
         [MinLength(2)]
         [MaxLength(25)]

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Professor Section</title>
+    <title>@ViewBag.Title - Student Section</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -22,9 +22,9 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Students", "Index", "Students")</li>
-                    <li>@Html.ActionLink("Gradings", "Index", "Gradeings")</li>
-                    <li>@Html.ActionLink("My Subjects", "Index", "Subjects")</li>
+                    <li>@Html.ActionLink("My Profile", "Index", "Students")</li>
+                    <li>@Html.ActionLink("Subjects", "Index", "Subjects")</li>
+                    <li>@Html.ActionLink("Grades", "Index", "Gradeings")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

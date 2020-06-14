@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using DifferentWeb.Models;
 using DifferentWeb.Repository;
+using Microsoft.AspNet.Identity;
 
 namespace DifferentWeb.Controllers
 {
@@ -35,6 +36,22 @@ namespace DifferentWeb.Controllers
                 return HttpNotFound();
             }
             return View(subject);
+        }
+
+        //Custom ActionResult
+        public ActionResult ReadStudentSubjects(string id)
+        {
+            if (id == null || id != User.Identity.GetUserName())
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Student student = db.Students.Find(id);
+            var subjects = db.Subjects.Where(x => x.Semester.ID == student.Semester.ID && x.Departament.ID == student.Branch.department.ID);
+            if (subjects == null)
+            {
+                return HttpNotFound();
+            }
+            return View(subjects.ToList());
         }
 
         // GET: Subjects/Create
