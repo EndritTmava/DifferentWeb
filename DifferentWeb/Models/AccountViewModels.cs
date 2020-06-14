@@ -49,9 +49,8 @@ namespace DifferentWeb.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "User Id")]
+        public string UserId { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

@@ -7,19 +7,109 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DifferentWeb.Models;
-using DifferentWeb.Repository;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace DifferentWeb.Controllers
 {
     public class ProfessorsController : Controller
     {
-        private CollegeContext db = new CollegeContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
+        static int userId = 5;
+
+
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
+
+        public ProfessorsController()
+        {
+        }
+
+        public ProfessorsController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        {
+            UserManager = userManager;
+            SignInManager = signInManager;
+        }
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async System.Threading.Tasks.Task<ActionResult> Create([Bind(Include = "ID,Qualification,UserId,Name,LastName,Gender,PersonalNumber,Birthday,Country,City,Email,PhoneNo,Password")] Professor professor)
+        {
+            string lastid = db.Professors.Max(p => p.UserId);
+            if (lastid != null)
+            {
+
+                lastid = lastid.Substring(0, lastid.Length - 1);
+                int id = int.Parse(lastid);
+                professor.UserId = $"{id + 1}P";
+
+            }
+            else
+            {
+                professor.UserId = $"1P";
+            }
+
+
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = professor.UserId, Email = professor.Email };
+                var result = await UserManager.CreateAsync(user, professor.Password);
+                string uid = user.Id;
+                if (result.Succeeded)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    db.Professors.Add(professor);
+
+
+                    await UserManager.AddToRoleAsync(uid, "Professor");
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+
+            }
+
+            return View(professor);
+
+
+
+
+
+
+
+
+
+
+
+        }
         // GET: Professors
         public ActionResult Index()
         {
-            var professors = db.Professors.Include(p => p.Role);
-            return View(professors.ToList());
+            return View(db.Professors.ToList());
         }
 
         // GET: Professors/Details/5
@@ -40,27 +130,9 @@ namespace DifferentWeb.Controllers
         // GET: Professors/Create
         public ActionResult Create()
         {
-            ViewBag.RoleID = new SelectList(db.Roles, "ID", "role");
             return View();
         }
 
-        // POST: Professors/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Qualification,RoleID,Name,LastName,Gender,PersonalNumber,Birthday,Country,City,Email,PhoneNo,Password")] Professor professor)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Professors.Add(professor);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.RoleID = new SelectList(db.Roles, "ID", "role", professor.RoleID);
-            return View(professor);
-        }
 
         // GET: Professors/Edit/5
         public ActionResult Edit(int? id)
@@ -74,7 +146,6 @@ namespace DifferentWeb.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.RoleID = new SelectList(db.Roles, "ID", "role", professor.RoleID);
             return View(professor);
         }
 
@@ -83,7 +154,7 @@ namespace DifferentWeb.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Qualification,RoleID,Name,LastName,Gender,PersonalNumber,Birthday,Country,City,Email,PhoneNo,Password")] Professor professor)
+        public ActionResult Edit([Bind(Include = "ID,Qualification,UserId,Name,LastName,Gender,PersonalNumber,Birthday,Country,City,Email,PhoneNo,Password")] Professor professor)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +162,6 @@ namespace DifferentWeb.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.RoleID = new SelectList(db.Roles, "ID", "role", professor.RoleID);
             return View(professor);
         }
 

@@ -7,13 +7,12 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DifferentWeb.Models;
-using DifferentWeb.Repository;
 
 namespace DifferentWeb.Controllers
 {
     public class BranchesController : Controller
     {
-        private CollegeContext db = new CollegeContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Branches
         public ActionResult Index()

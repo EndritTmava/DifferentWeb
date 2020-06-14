@@ -15,9 +15,6 @@
             @Html.DisplayNameFor(model => model.Branch.BranchName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Role.role)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Semester.semester)
         </th>
         <th>
@@ -37,6 +34,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FirstSemesterID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserId)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -77,9 +77,6 @@
             @Html.DisplayFor(modelItem => item.Branch.BranchName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Role.role)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Semester.semester)
         </td>
         <td>
@@ -99,6 +96,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.FirstSemesterID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserId)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Name)

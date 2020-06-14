@@ -13,9 +13,6 @@ namespace DifferentWeb.Models
         [MaxLength(50)]
         [Display(Name = "Qualification")]
         public string Qualification { get; set; }
-        [Required]
-        public int RoleID { get; set; }
 
-        public Role Role { get; set; }
     }
 }

@@ -7,18 +7,59 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DifferentWeb.Models;
-using DifferentWeb.Repository;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace DifferentWeb.Controllers
 {
     public class StudentsController : Controller
     {
-        private CollegeContext db = new CollegeContext();
+
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+
+
+
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
+
+        public StudentsController()
+        {
+        }
+
+        public StudentsController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        {
+            UserManager = userManager;
+            SignInManager = signInManager;
+        }
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
 
         // GET: Students
         public ActionResult Index()
         {
-            var students = db.Students.Include(s => s.Branch).Include(s => s.Role).Include(s => s.Semester);
+            var students = db.Students.Include(s => s.Branch).Include(s => s.Semester);
             return View(students.ToList());
         }
 
@@ -41,7 +82,6 @@ namespace DifferentWeb.Controllers
         public ActionResult Create()
         {
             ViewBag.BranchID = new SelectList(db.Branches, "ID", "BranchName");
-            ViewBag.RoleId = new SelectList(db.Roles, "ID", "role");
             ViewBag.SemesterID = new SelectList(db.Semesters, "ID", "semester");
             return View();
         }
@@ -51,20 +91,48 @@ namespace DifferentWeb.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,ParentName,ParentLastName,ParentEmail,ParentPhoneNumber,RegistrationDate,BranchID,FirstSemesterID,SemesterID,RoleId,Name,LastName,Gender,PersonalNumber,Birthday,Country,City,Email,PhoneNo,Password")] Student student)
+        public async System.Threading.Tasks.Task<ActionResult> Create([Bind(Include = "ID,ParentName,ParentLastName,ParentEmail,ParentPhoneNumber,RegistrationDate,BranchID,FirstSemesterID,SemesterID,UserId,Name,LastName,Gender,PersonalNumber,Birthday,Country,City,Email,PhoneNo,Password")] Student student)
         {
+
+            string lastid = db.Students.Max(p => p.UserId);
+
+            if (lastid != null)
+            {
+
+                lastid = lastid.Substring(0, lastid.Length - 1);
+                int id = int.Parse(lastid);
+                student.UserId = $"{id + 1}S";
+            }
+
+            else
+            {
+                student.UserId = $"1S";//"{id+1}A";
+            }
+
             if (ModelState.IsValid)
             {
-                db.Students.Add(student);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var user = new ApplicationUser { UserName = student.UserId, Email = student.Email };
+                var result = await UserManager.CreateAsync(user, student.Password);
+                string uid = user.Id;
+
+                if (result.Succeeded)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    db.Students.Add(student);
+
+                    await UserManager.AddToRoleAsync(uid, "Student");
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
             }
 
             ViewBag.BranchID = new SelectList(db.Branches, "ID", "BranchName", student.BranchID);
-            ViewBag.RoleId = new SelectList(db.Roles, "ID", "role", student.RoleId);
             ViewBag.SemesterID = new SelectList(db.Semesters, "ID", "semester", student.SemesterID);
             return View(student);
         }
+
+        // GET: Students
 
         // GET: Students/Edit/5
         public ActionResult Edit(int? id)
@@ -79,7 +147,6 @@ namespace DifferentWeb.Controllers
                 return HttpNotFound();
             }
             ViewBag.BranchID = new SelectList(db.Branches, "ID", "BranchName", student.BranchID);
-            ViewBag.RoleId = new SelectList(db.Roles, "ID", "role", student.RoleId);
             ViewBag.SemesterID = new SelectList(db.Semesters, "ID", "semester", student.SemesterID);
             return View(student);
         }
@@ -89,7 +156,7 @@ namespace DifferentWeb.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,ParentName,ParentLastName,ParentEmail,ParentPhoneNumber,RegistrationDate,BranchID,FirstSemesterID,SemesterID,RoleId,Name,LastName,Gender,PersonalNumber,Birthday,Country,City,Email,PhoneNo,Password")] Student student)
+        public ActionResult Edit([Bind(Include = "ID,ParentName,ParentLastName,ParentEmail,ParentPhoneNumber,RegistrationDate,BranchID,FirstSemesterID,SemesterID,UserId,Name,LastName,Gender,PersonalNumber,Birthday,Country,City,Email,PhoneNo,Password")] Student student)
         {
             if (ModelState.IsValid)
             {
@@ -98,7 +165,6 @@ namespace DifferentWeb.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.BranchID = new SelectList(db.Branches, "ID", "BranchName", student.BranchID);
-            ViewBag.RoleId = new SelectList(db.Roles, "ID", "role", student.RoleId);
             ViewBag.SemesterID = new SelectList(db.Semesters, "ID", "semester", student.SemesterID);
             return View(student);
         }

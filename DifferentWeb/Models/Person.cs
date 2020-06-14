@@ -10,27 +10,30 @@ namespace DifferentWeb.Models
     {
 
         public int ID { get; set; }
+
+
+        public string UserId { get; set; }
         [Required]
         [MinLength(2)]
         [MaxLength(25)]
-        [RegularExpression("[A-Za-z]")]
+        [RegularExpression(@"^[a-zA-Z]+$")]
         [Display(Name = "Name")]
         public string Name { get; set; }
         [Required]
         [MinLength(2)]
         [MaxLength(25)]
-        [RegularExpression("[A-Za-z]")]
+        [RegularExpression(@"^[a-zA-Z]+$")]
         [Display(Name = "LastName")]
         public string LastName { get; set; }
         [Required]
 
-        [RegularExpression("[A-Za-z]")]
+        [RegularExpression(@"^[a-zA-Z]+$")]
         [Display(Name = "Gender")]
         public string Gender { get; set; }
         [Required]
         [MinLength(10)]
         [MaxLength(10)]
-        [RegularExpression("[0-9]")]
+        [RegularExpression("^[0-9]+")]
         [Display(Name = "Personal Number")]
         public string PersonalNumber { get; set; }
         [Required]
@@ -40,7 +43,7 @@ namespace DifferentWeb.Models
         [Required]
         [MinLength(4)]
         [MaxLength(25)]
-        [RegularExpression("[A-Za-z]")]
+        [RegularExpression(@"^[a-zA-Z]+$")]
         [Display(Name = "Country")]
         public string Country { get; set; }
         [Required]
@@ -50,10 +53,9 @@ namespace DifferentWeb.Models
         public string City { get; set; }
 
         [Required]
-        [MinLength(10)]
-        [MaxLength(10)]
-        [RegularExpression(@" ^ ([0 - 9a - zA - Z]([\+\-_\.][0 - 9a - zA - Z] +) *)+@(([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]*\\.)+[a-zA-Z0-9]{2,17})$")]
-        [Display(Name = "Email")]
+        [MinLength(5)]
+        [MaxLength(50)]
+        [EmailAddress]
         public string Email { get; set; }
 
         [Required]

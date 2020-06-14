@@ -8,9 +8,7 @@ namespace DifferentWeb.Models
 {
     public class Administrator:Person
     {
-        [Required]
-        public int RoleID { get; set; }
-        public Role Role { get; set; }
+
 
     }
 

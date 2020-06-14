@@ -177,7 +177,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProfessorsController.cs" />
-    <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SemestersController.cs" />
     <Compile Include="Controllers\SemesterSubmitionsController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
@@ -185,11 +184,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202006110511056_InitialCreation.cs" />
-    <Compile Include="Migrations\202006110511056_InitialCreation.Designer.cs">
-      <DependentUpon>202006110511056_InitialCreation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Administrator.cs" />
     <Compile Include="Models\Branch.cs" />
@@ -199,28 +193,13 @@
     <Compile Include="Models\Gradeing.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\TestClass.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Professor.cs" />
-    <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Semester.cs" />
     <Compile Include="Models\SemesterSubmition.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\Subject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\AdministratorRepository.cs" />
-    <Compile Include="Repository\BranchRepository.cs" />
-    <Compile Include="Repository\CollegeContext.cs" />
-    <Compile Include="Repository\DepartamentRepository.cs" />
-    <Compile Include="Repository\ExamPeriodRepository.cs" />
-    <Compile Include="Repository\ExamSubmitionRepository.cs" />
-    <Compile Include="Repository\GradeingRepository.cs" />
-    <Compile Include="Repository\ProfessorRepository.cs" />
-    <Compile Include="Repository\RoleRepository.cs" />
-    <Compile Include="Repository\SemesterRepository.cs" />
-    <Compile Include="Repository\SemesterSubmitionRepository.cs" />
-    <Compile Include="Repository\StudentRepository.cs" />
-    <Compile Include="Repository\SubjectRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -329,16 +308,16 @@
     <Content Include="Views\SemesterSubmitions\Details.cshtml" />
     <Content Include="Views\SemesterSubmitions\Edit.cshtml" />
     <Content Include="Views\SemesterSubmitions\Index.cshtml" />
-    <Content Include="Views\Students\Create.cshtml" />
-    <Content Include="Views\Students\Delete.cshtml" />
-    <Content Include="Views\Students\Details.cshtml" />
-    <Content Include="Views\Students\Edit.cshtml" />
-    <Content Include="Views\Students\Index.cshtml" />
     <Content Include="Views\Subjects\Create.cshtml" />
     <Content Include="Views\Subjects\Delete.cshtml" />
     <Content Include="Views\Subjects\Details.cshtml" />
     <Content Include="Views\Subjects\Edit.cshtml" />
     <Content Include="Views\Subjects\Index.cshtml" />
+    <Content Include="Views\Students\Create.cshtml" />
+    <Content Include="Views\Students\Delete.cshtml" />
+    <Content Include="Views\Students\Details.cshtml" />
+    <Content Include="Views\Students\Edit.cshtml" />
+    <Content Include="Views\Students\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -355,11 +334,6 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202006110511056_InitialCreation.resx">
-      <DependentUpon>202006110511056_InitialCreation.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
