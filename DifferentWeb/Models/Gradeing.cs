@@ -8,7 +8,6 @@ namespace DifferentWeb.Models
 {
     public class Gradeing
     {
-
         public int ID { get; set;}
         public Student Student { get; set; }
         [Required]

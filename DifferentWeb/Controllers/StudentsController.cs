@@ -78,6 +78,21 @@ namespace DifferentWeb.Controllers
             return View(student);
         }
 
+        //Custom ActionResult
+        public ActionResult Profile(string id)
+        {
+            if (id != User.Identity.GetUserName())
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Student student = db.Students.Find(User.Identity.GetUserName());
+            if (student == null)
+            {
+                return HttpNotFound();
+            }
+            return View(student);
+        }
+
         // GET: Students/Create
         public ActionResult Create()
         {

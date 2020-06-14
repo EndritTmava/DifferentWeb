@@ -7,10 +7,8 @@ using System.Web;
 
 namespace DifferentWeb.Models
 {
-
     public class Subject
     {
-
         public int ID { get; set; }
         [Required(ErrorMessage = "Enter Subject Name")]
         [MinLength(3)]
@@ -30,7 +28,5 @@ namespace DifferentWeb.Models
         [RegularExpression("[0-9]")]
         public int ProfessorID { get; set; }
         public virtual Professor Professor { get; set; }
-
-
     }
 }
