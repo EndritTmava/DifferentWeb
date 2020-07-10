@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdministrator.cshtml";
 }
 
 <h2>Index</h2>
@@ -12,40 +13,43 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Professor.Qualification)
+            @Html.DisplayNameFor(model => model.Branch.BranchName)
+        </th>
+        <th>
+            <p>Professor</p>
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Semester.semester)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.SubjectName)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SemestrID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BranchID)
-        </th>
+
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Professor.Qualification)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SubjectName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SemestrID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BranchID)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Branch.BranchName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Professor.Name)
+        @Html.DisplayFor(modelItem => item.Professor.LastName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Semester.semester)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.SubjectName)
+    </td>
+
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+    </td>
+</tr>
 }
 
 </table>

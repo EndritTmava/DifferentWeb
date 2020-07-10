@@ -17,5 +17,6 @@ namespace DifferentWeb.Models
         [Display(Name = "Departament Name")]
         public string DepartamentName { get; set; }
         public List<Branch> Branches { get; set; }
+        public double AverageGrade { get; set; }
     }
 }

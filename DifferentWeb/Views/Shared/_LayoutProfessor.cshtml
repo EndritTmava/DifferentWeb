@@ -8,6 +8,8 @@
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
+
+
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -19,12 +21,13 @@
                 </button>
                 @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
+
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Students", "Index", "Students")</li>
                     <li>@Html.ActionLink("Gradings", "Index", "Gradeings")</li>
-                    <li>@Html.ActionLink("My Subjects", "Index", "Subjects")</li>
+                    <li>@Html.ActionLink("My Subjects", "MySubjects", "Professors")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

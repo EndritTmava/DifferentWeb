@@ -6,11 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using DifferentWeb.Models;
 using Microsoft.AspNet.Identity.Owin;
 
 namespace DifferentWeb.Controllers
 {
+
     public class StudentsController : Controller
     {
 
@@ -57,15 +59,83 @@ namespace DifferentWeb.Controllers
         }
 
         // GET: Students
+
+        [Authorize(Roles = "Admin,Professor")]
         public ActionResult Index()
         {
-            var students = db.Students.Include(s => s.Branch).Include(s => s.Semester);
-            return View(students.ToList());
+
+            List<Student> students;
+            string loggedid = User.Identity.Name;
+            List<Subject> sub = db.Subjects.Where(x => x.Professor.UserId == loggedid).Include(x => x.Professor)
+                .Include(x => x.Branch).Include(x => x.Semester).ToList();
+
+
+
+            if (User.IsInRole("Admin"))
+            {
+                 students = db.Students.Include(s => s.Branch).Include(s => s.Semester).ToList();
+                return View(students.ToList());
+            }
+            else if (User.IsInRole("Professor"))
+            {
+
+                var Astudents = (from c in db.Students
+                                         join ct in db.Subjects on c.BranchID equals ct.BranchID
+                                         where (ct.Professor.UserId == loggedid) && (ct.SemesterID == c.SemesterID)
+                                         select new { c.UserId,c.Name,c.LastName,c.Branch.BranchName,c.Semester.semester,c.RegistrationDate,c.FirstSemesterID,c.Gender,c.Birthday,c.Country,c.City,c.Email,c.PhoneNo }).ToList();
+
+                students = new List<Student>();
+                foreach (var item in Astudents)
+                {
+
+                    students.Add(new Student
+                    {
+                        UserId = item.UserId,
+                        Name = item.Name,
+                        LastName = item.LastName,
+                        Branch = new Branch() { BranchName = item.BranchName },
+                        Semester = new Semester() { semester = item.semester },
+                        RegistrationDate = item.RegistrationDate,
+                        FirstSemesterID = item.FirstSemesterID,
+                        Gender = item.Gender,
+                        Birthday = item.Birthday,
+                        Country = item.Country,
+                        City = item.City,
+                        Email = item.Email,
+                        PhoneNo = item.PhoneNo
+                    });
+                }
+                
+                                    
+                //= db.Students.Where(x => x.SemesterID == ).Include(s => s.Branch).Include(s => s.Semester).ToList();
+                return View("PIndex", students);
+            }
+
+            return View();
         }
 
         // GET: Students/Details/5
+        [Authorize(Roles = "Student")]
+        public ActionResult StudentDetails()
+        {
+
+
+                Student student = db.Students.Where(s=> s.UserId == User.Identity.Name).First();
+
+            if (student == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(student);
+        }
+
+
+        // GET: Students/Details/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -78,22 +148,10 @@ namespace DifferentWeb.Controllers
             return View(student);
         }
 
-        //Custom ActionResult
-        public ActionResult Profile(string id)
-        {
-            if (id != User.Identity.GetUserName())
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Student student = db.Students.Find(User.Identity.GetUserName());
-            if (student == null)
-            {
-                return HttpNotFound();
-            }
-            return View(student);
-        }
+
 
         // GET: Students/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             ViewBag.BranchID = new SelectList(db.Branches, "ID", "BranchName");
@@ -104,6 +162,7 @@ namespace DifferentWeb.Controllers
         // POST: Students/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async System.Threading.Tasks.Task<ActionResult> Create([Bind(Include = "ID,ParentName,ParentLastName,ParentEmail,ParentPhoneNumber,RegistrationDate,BranchID,FirstSemesterID,SemesterID,UserId,Name,LastName,Gender,PersonalNumber,Birthday,Country,City,Email,PhoneNo,Password")] Student student)
@@ -150,6 +209,7 @@ namespace DifferentWeb.Controllers
         // GET: Students
 
         // GET: Students/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -169,6 +229,7 @@ namespace DifferentWeb.Controllers
         // POST: Students/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,ParentName,ParentLastName,ParentEmail,ParentPhoneNumber,RegistrationDate,BranchID,FirstSemesterID,SemesterID,UserId,Name,LastName,Gender,PersonalNumber,Birthday,Country,City,Email,PhoneNo,Password")] Student student)
@@ -185,6 +246,7 @@ namespace DifferentWeb.Controllers
         }
 
         // GET: Students/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -200,6 +262,7 @@ namespace DifferentWeb.Controllers
         }
 
         // POST: Students/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

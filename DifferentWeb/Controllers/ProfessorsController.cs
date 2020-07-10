@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace DifferentWeb.Controllers
 {
+
     public class ProfessorsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -57,6 +58,7 @@ namespace DifferentWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async System.Threading.Tasks.Task<ActionResult> Create([Bind(Include = "ID,Qualification,UserId,Name,LastName,Gender,PersonalNumber,Birthday,Country,City,Email,PhoneNo,Password")] Professor professor)
         {
             string lastid = db.Professors.Max(p => p.UserId);
@@ -107,12 +109,14 @@ namespace DifferentWeb.Controllers
 
         }
         // GET: Professors
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             return View(db.Professors.ToList());
         }
 
         // GET: Professors/Details/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -128,6 +132,7 @@ namespace DifferentWeb.Controllers
         }
 
         // GET: Professors/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -135,6 +140,7 @@ namespace DifferentWeb.Controllers
 
 
         // GET: Professors/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -154,6 +160,7 @@ namespace DifferentWeb.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit([Bind(Include = "ID,Qualification,UserId,Name,LastName,Gender,PersonalNumber,Birthday,Country,City,Email,PhoneNo,Password")] Professor professor)
         {
             if (ModelState.IsValid)
@@ -166,6 +173,7 @@ namespace DifferentWeb.Controllers
         }
 
         // GET: Professors/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -183,12 +191,23 @@ namespace DifferentWeb.Controllers
         // POST: Professors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             Professor professor = db.Professors.Find(id);
             db.Professors.Remove(professor);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        [Authorize(Roles = "Professor")]
+        public ActionResult MySubjects()
+        {
+
+            string loggedid = User.Identity.Name;
+            List<Subject> sub = db.Subjects.Where(x => x.Professor.UserId == loggedid).ToList();
+
+            return View(sub);
         }
 
         protected override void Dispose(bool disposing)

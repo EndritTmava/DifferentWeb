@@ -12,7 +12,7 @@ namespace DifferentWeb.Models
         public Student Student { get; set; }
         [Required]
         [Display(Name = "Student Id")]
-        public int StudentID { get; set; }
+        public string StudentID { get; set; }
         [Required]
         [RegularExpression("[0-9]")]
         [Display(Name = "Result")]
@@ -21,6 +21,7 @@ namespace DifferentWeb.Models
         [DataType(DataType.DateTime, ErrorMessage = "Please enter a valid date in the format dd/mm/yyyy hh:mm")]
         [Display(Name = "Grading Date")]
         public DateTime GradingDate { get; set; }
+        public int SubjectID { get; set; }
         public Subject Subject { get; set; }
         public ExamSubmition ExamSubmition { get; set; }
     }

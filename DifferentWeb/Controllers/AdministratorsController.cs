@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace DifferentWeb.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdministratorsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -133,7 +134,7 @@ namespace DifferentWeb.Controllers
         // POST: Administrators/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-      
+
 
         // GET: Administrators/Edit/5
         public ActionResult Edit(int? id)
@@ -147,7 +148,7 @@ namespace DifferentWeb.Controllers
             {
                 return HttpNotFound();
             }
-           // ViewBag.RoleID = new SelectList(db.Roles, "ID", "role", administrator.RoleID);
+            // ViewBag.RoleID = new SelectList(db.Roles, "ID", "role", administrator.RoleID);
             return View(administrator);
         }
 
@@ -164,7 +165,7 @@ namespace DifferentWeb.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-          //  ViewBag.RoleID = new SelectList(db.Roles, "ID", "role", administrator.RoleID);
+            //  ViewBag.RoleID = new SelectList(db.Roles, "ID", "role", administrator.RoleID);
             return View(administrator);
         }
 

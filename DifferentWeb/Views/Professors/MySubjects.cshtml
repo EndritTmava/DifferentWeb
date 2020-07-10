@@ -1,0 +1,38 @@
+﻿@model IEnumerable<DifferentWeb.Models.Subject>
+
+@{
+    ViewBag.Title = "MySubjects";
+    Layout = "~/Views/Shared/_LayoutProfessor.cshtml";
+}
+
+<h2>MySubjects</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Branch.BranchName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Semester.semester)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubjectName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Branch.BranchName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Semester.semester)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubjectName)
+        </td>
+    </tr>
+}
+
+</table>

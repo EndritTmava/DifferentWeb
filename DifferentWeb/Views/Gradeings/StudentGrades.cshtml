@@ -1,0 +1,66 @@
+﻿@model IEnumerable<DifferentWeb.Models.Subject>
+
+
+@{
+    ViewBag.Title = "StudentGrades";
+    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+}
+
+<h2>StudentGrades</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Branch.BranchName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Professor.Qualification)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Semester.semester)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubjectName)
+        </th>
+        <th>
+            <p>
+                Grade
+            </p>
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Branch.BranchName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Professor.Qualification)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Semester.semester)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubjectName)
+        </td>
+        <td>
+                @foreach (var grade in ViewBag.Grades)
+                {
+                    if (item.ID == grade.Subject.ID)
+                    {
+                        <p>
+                            @grade.Result
+                        </p>
+                    }
+                }
+
+        </td>
+
+    </tr>
+}
+
+</table>

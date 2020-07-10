@@ -10,12 +10,13 @@ namespace DifferentWeb.Models
     {
         public int ID { get; set; }
         [Required]
-        [RegularExpression("[a-zA-z]")]
+        [RegularExpression(@"^[a-zA-Z]+$")]
         [MinLength(2)]
         [MaxLength(25)]
-        [Display(Name = "Branch Name")]
+        [Display(Name = "Branch")]
         public string BranchName { get; set; }
         public virtual Departament department { get; set; }
+
         [Required]
         public int DepartamentID { get; set; }
         public List<Student> Students { get; set; }

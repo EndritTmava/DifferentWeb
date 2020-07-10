@@ -17,7 +17,7 @@ namespace DifferentWeb.Models
         [Required]
         public int StudentID { get; set; }
         [Required]
-        [DataType(DataType.DateTime, ErrorMessage = "Please enter a valid date in the format dd/mm/yyyy hh:mm")]
+        [DataType(DataType.DateTime, ErrorMessage = "Please enter a valid date in the format dd/mm/yyyy")]
         [Display(Name = "Date of submition")]
         public DateTime DateOfSubmition { get; set; }
 

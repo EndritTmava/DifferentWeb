@@ -38,6 +38,9 @@ namespace DifferentWeb.Models
       //  [Required( ErrorMessage = "Please pick brach")]
         public virtual int BranchID { get; set; }
         public virtual Branch Branch { get; set; }
+
+
+
       //  [Required]
         public int FirstSemesterID { get; set; }
         public virtual Semester Semester { get; set; }

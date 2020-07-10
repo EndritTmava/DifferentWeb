@@ -10,6 +10,7 @@ using DifferentWeb.Models;
 
 namespace DifferentWeb.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class BranchesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

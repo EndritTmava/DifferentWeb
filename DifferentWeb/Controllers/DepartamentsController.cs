@@ -10,6 +10,7 @@ using DifferentWeb.Models;
 
 namespace DifferentWeb.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class DepartamentsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -28,6 +29,28 @@ namespace DifferentWeb.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Departament departament = db.Departaments.Find(id);
+            List<Gradeing> gradeings = db.Gradeings.Include(g => g.Student).Include(g => g.Subject).ToList();
+
+
+            var averageGrades =
+
+            from averageGrade
+                    in gradeings
+            group averageGrade by averageGrade.Subject.Branch.DepartamentID;
+            ;
+
+            foreach (var item in averageGrades)
+            {
+
+                double d = item.Average(x => x.Result);
+
+                if (item.Key == departament.ID)
+                {
+                    departament.AverageGrade = d;
+                }
+
+
+            }
             if (departament == null)
             {
                 return HttpNotFound();

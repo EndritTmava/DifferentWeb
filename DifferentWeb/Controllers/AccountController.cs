@@ -17,7 +17,7 @@ namespace DifferentWeb.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        private ApplicationDbContext db = new ApplicationDbContext();
         public AccountController()
         {
         }
@@ -39,7 +39,6 @@ namespace DifferentWeb.Controllers
                 _signInManager = value; 
             }
         }
-
         public ApplicationUserManager UserManager
         {
             get
@@ -78,7 +77,22 @@ namespace DifferentWeb.Controllers
             var result = await SignInManager.PasswordSignInAsync(model.UserId, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
+
                 case SignInStatus.Success:
+                    var user = db.Users.Single(x => x.UserName == model.UserId);
+                    var role = UserManager.GetRoles(user.Id);
+                    if (role[0] == "Admin")
+                    {
+                        return RedirectToAction("Index", "Administrators");
+                    }
+                    else if (role[0] == "Professor")
+                    {
+                        return RedirectToAction("Index", "Gradeings");
+                    }
+                    else if (role[0] == "Student")
+                    {
+                        return RedirectToAction("Index", "Gradeings");
+                    }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");

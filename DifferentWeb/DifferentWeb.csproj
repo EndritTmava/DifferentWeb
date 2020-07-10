@@ -177,17 +177,15 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProfessorsController.cs" />
-    <Compile Include="Controllers\RolesController.cs" />
-    <Compile Include="Controllers\SemestersController.cs" />
     <Compile Include="Controllers\SemesterSubmitionsController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="Controllers\SubjectsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202006110511056_InitialCreation.cs" />
-    <Compile Include="Migrations\202006110511056_InitialCreation.Designer.cs">
-      <DependentUpon>202006110511056_InitialCreation.cs</DependentUpon>
+    <Compile Include="Migrations\202007091512045_Initial create.cs" />
+    <Compile Include="Migrations\202007091512045_Initial create.Designer.cs">
+      <DependentUpon>202007091512045_Initial create.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -199,28 +197,13 @@
     <Compile Include="Models\Gradeing.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\TestClass.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Professor.cs" />
-    <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Semester.cs" />
     <Compile Include="Models\SemesterSubmition.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\Subject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\AdministratorRepository.cs" />
-    <Compile Include="Repository\BranchRepository.cs" />
-    <Compile Include="Repository\CollegeContext.cs" />
-    <Compile Include="Repository\DepartamentRepository.cs" />
-    <Compile Include="Repository\ExamPeriodRepository.cs" />
-    <Compile Include="Repository\ExamSubmitionRepository.cs" />
-    <Compile Include="Repository\GradeingRepository.cs" />
-    <Compile Include="Repository\ProfessorRepository.cs" />
-    <Compile Include="Repository\RoleRepository.cs" />
-    <Compile Include="Repository\SemesterRepository.cs" />
-    <Compile Include="Repository\SemesterSubmitionRepository.cs" />
-    <Compile Include="Repository\StudentRepository.cs" />
-    <Compile Include="Repository\SubjectRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -279,6 +262,14 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Roles\Create.cshtml" />
+    <Content Include="Views\Roles\Delete.cshtml" />
+    <Content Include="Views\Roles\Details.cshtml" />
+    <Content Include="Views\Roles\Edit.cshtml" />
+    <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutStudent.cshtml" />
+    <Content Include="Views\Shared\_LayoutProfessor.cshtml" />
+    <Content Include="Views\Shared\_LayoutAdministrator.cshtml" />
     <Content Include="Views\Administrators\Create.cshtml" />
     <Content Include="Views\Administrators\Delete.cshtml" />
     <Content Include="Views\Administrators\Details.cshtml" />
@@ -299,52 +290,42 @@
     <Content Include="Views\ExamPeriods\Details.cshtml" />
     <Content Include="Views\ExamPeriods\Edit.cshtml" />
     <Content Include="Views\ExamPeriods\Index.cshtml" />
-    <Content Include="Views\ExamSubmitions\Create.cshtml" />
-    <Content Include="Views\ExamSubmitions\Delete.cshtml" />
-    <Content Include="Views\ExamSubmitions\Details.cshtml" />
-    <Content Include="Views\ExamSubmitions\Edit.cshtml" />
-    <Content Include="Views\ExamSubmitions\Index.cshtml" />
-    <Content Include="Views\Gradeings\Create.cshtml" />
-    <Content Include="Views\Gradeings\Delete.cshtml" />
-    <Content Include="Views\Gradeings\Details.cshtml" />
-    <Content Include="Views\Gradeings\Edit.cshtml" />
-    <Content Include="Views\Gradeings\Index.cshtml" />
     <Content Include="Views\Professors\Create.cshtml" />
     <Content Include="Views\Professors\Delete.cshtml" />
     <Content Include="Views\Professors\Details.cshtml" />
     <Content Include="Views\Professors\Edit.cshtml" />
     <Content Include="Views\Professors\Index.cshtml" />
-    <Content Include="Views\Roles\Create.cshtml" />
-    <Content Include="Views\Roles\Delete.cshtml" />
-    <Content Include="Views\Roles\Details.cshtml" />
-    <Content Include="Views\Roles\Edit.cshtml" />
-    <Content Include="Views\Roles\Index.cshtml" />
-    <Content Include="Views\Semesters\Create.cshtml" />
-    <Content Include="Views\Semesters\Delete.cshtml" />
-    <Content Include="Views\Semesters\Details.cshtml" />
-    <Content Include="Views\Semesters\Edit.cshtml" />
-    <Content Include="Views\Semesters\Index.cshtml" />
     <Content Include="Views\SemesterSubmitions\Create.cshtml" />
     <Content Include="Views\SemesterSubmitions\Delete.cshtml" />
     <Content Include="Views\SemesterSubmitions\Details.cshtml" />
     <Content Include="Views\SemesterSubmitions\Edit.cshtml" />
     <Content Include="Views\SemesterSubmitions\Index.cshtml" />
-    <Content Include="Views\Students\Create.cshtml" />
     <Content Include="Views\Students\Delete.cshtml" />
     <Content Include="Views\Students\Details.cshtml" />
     <Content Include="Views\Students\Edit.cshtml" />
     <Content Include="Views\Students\Index.cshtml" />
+    <Content Include="Views\Gradeings\Create.cshtml" />
+    <Content Include="Views\Gradeings\Delete.cshtml" />
+    <Content Include="Views\Gradeings\Details.cshtml" />
+    <Content Include="Views\Gradeings\Edit.cshtml" />
+    <Content Include="Views\Gradeings\Index.cshtml" />
+    <Content Include="Views\ExamSubmitions\Delete.cshtml" />
+    <Content Include="Views\ExamSubmitions\Details.cshtml" />
+    <Content Include="Views\ExamSubmitions\Edit.cshtml" />
+    <Content Include="Views\ExamSubmitions\Index.cshtml" />
     <Content Include="Views\Subjects\Create.cshtml" />
     <Content Include="Views\Subjects\Delete.cshtml" />
     <Content Include="Views\Subjects\Details.cshtml" />
     <Content Include="Views\Subjects\Edit.cshtml" />
     <Content Include="Views\Subjects\Index.cshtml" />
-    <Content Include="Views\Shared\_LayoutStudent.cshtml" />
-    <Content Include="Views\Shared\_LayoutProfessor.cshtml" />
-    <Content Include="Views\Shared\_LayoutAdministrator.cshtml" />
-    <Content Include="Views\Students\Profile.cshtml" />
-    <Content Include="Views\Gradeings\ReadGrades.cshtml" />
-    <Content Include="Views\Subjects\ReadStudentSubjects.cshtml" />
+    <Content Include="Views\ExamSubmitions\Create.cshtml" />
+    <Content Include="Views\Students\Create.cshtml" />
+    <Content Include="Views\Professors\MySubjects.cshtml" />
+    <Content Include="Views\Students\PIndex.cshtml" />
+    <Content Include="Views\Subjects\StudentSubjects.cshtml" />
+    <Content Include="Views\Gradeings\StudentGrades.cshtml" />
+    <Content Include="Views\Students\StudentDetails.cshtml" />
+    <Content Include="Views\Home\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -363,8 +344,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202006110511056_InitialCreation.resx">
-      <DependentUpon>202006110511056_InitialCreation.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007091512045_Initial create.resx">
+      <DependentUpon>202007091512045_Initial create.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
