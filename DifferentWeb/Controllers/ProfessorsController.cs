@@ -108,6 +108,29 @@ namespace DifferentWeb.Controllers
 
 
         }
+
+        [HttpPost]
+        public ActionResult Index(string searchText)
+        {
+            List<Professor> Professors = new List<Professor>();
+            if (User.IsInRole("Admin"))
+            {
+
+
+                foreach (var item in db.Professors.ToList())
+                {
+                    if ($"{item.Name} {item.LastName}" == searchText || searchText == string.Empty || item.UserId == searchText || item.Name == searchText || item.LastName == searchText)
+                    {
+                        Professors.Add(item);
+                    }
+                }
+
+                return View("Index", Professors);
+            }
+            return View(Professors);
+        }
+
+
         // GET: Professors
         [Authorize(Roles = "Admin")]
         public ActionResult Index()

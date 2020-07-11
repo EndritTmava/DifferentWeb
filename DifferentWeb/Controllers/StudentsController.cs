@@ -58,9 +58,74 @@ namespace DifferentWeb.Controllers
             }
         }
 
-        // GET: Students
+        [Authorize(Roles = "Admin,Professor")]
+        [HttpPost]
+        public ActionResult Index(string searchText)
+        {
+            List<Student> students = new List<Student>();
+            if (User.IsInRole("Admin"))
+            {
+
+
+                foreach (var item in db.Students.ToList())
+                {
+                    if ($"{item.Name} {item.LastName}" == searchText|| searchText == string.Empty || item.UserId == searchText || item.Name == searchText || item.LastName == searchText)
+                    {
+                        students.Add(item);
+                    }
+                }
+
+                return View("Index", students);
+            }
+            else if (User.IsInRole("Professor"))
+            {
+
+                var Astudents = (from c in db.Students
+                                 join ct in db.Subjects on c.BranchID equals ct.BranchID
+                                 where (ct.Professor.UserId == User.Identity.Name) && (ct.SemesterID == c.SemesterID)
+                                 select new { c.UserId, c.Name, c.LastName, c.Branch.BranchName, c.Semester.semester, c.RegistrationDate, c.FirstSemesterID, c.Gender, c.Birthday, c.Country, c.City, c.Email, c.PhoneNo }).ToList();
+
+                students = new List<Student>();
+
+                foreach (var item in Astudents)
+                {
+
+                    if ($"{item.Name} {item.LastName}" == searchText || searchText == string.Empty || item.UserId == searchText || item.Name == searchText || item.LastName == searchText)
+                    {
+                        students.Add(new Student
+                        {
+                            UserId = item.UserId,
+                            Name = item.Name,
+                            LastName = item.LastName,
+                            Branch = new Branch() { BranchName = item.BranchName },
+                            Semester = new Semester() { semester = item.semester },
+                            RegistrationDate = item.RegistrationDate,
+                            FirstSemesterID = item.FirstSemesterID,
+                            Gender = item.Gender,
+                            Birthday = item.Birthday,
+                            Country = item.Country,
+                            City = item.City,
+                            Email = item.Email,
+                            PhoneNo = item.PhoneNo
+                        });
+
+                    }
+                    
+                }
+
+
+                //= db.Students.Where(x => x.SemesterID == ).Include(s => s.Branch).Include(s => s.Semester).ToList();
+                return View("PIndex", students);
+            }
+            return HttpNotFound();
+        }
+
+
+
+
 
         [Authorize(Roles = "Admin,Professor")]
+        [HttpGet]
         public ActionResult Index()
         {
 

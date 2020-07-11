@@ -53,9 +53,22 @@ namespace DifferentWeb.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                Student student = db.Students.Find(semesterSubmition.StudentID);
+                semesterSubmition.SemestrID = student.SemesterID + 1;
+                semesterSubmition.SemesterRegistrationDate = DateTime.Now;
                 db.SemesterSubmitions.Add(semesterSubmition);
                 db.SaveChanges();
+
+                student.SemesterID = student.SemesterID + 1;
+                db.Entry(student).State = EntityState.Modified;
+
+                db.SaveChanges();
+
+
                 return RedirectToAction("Index");
+
+
             }
 
             ViewBag.StudentID = new SelectList(db.Students, "ID", "ParentName", semesterSubmition.StudentID);
